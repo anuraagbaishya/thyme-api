@@ -13,12 +13,22 @@ from fastapi.templating import Jinja2Templates
 from recipe_scrapers import scrape_me
 
 from ai_tasks import ExtractRecipeDetailsTask, GenerateRecipeTask
-from custom_scrapers import (CustomScraper, custom_scraper_base_urls,
-                             get_scrapper)
-from models import (AddRecipeRequest, IdResponse, NotionPageId, OkResponse,
-                    Recipe, RecipeDetails, RecipeListResponse, RecipeRequest,
-                    RecipeResponse, ShoppingListList, ShoppingListRequest,
-                    UpdateRecipeRequest, UpdateShoppingListRequest)
+from custom_scrapers import CustomScraper, custom_scraper_base_urls, get_scrapper
+from models import (
+    AddRecipeRequest,
+    IdResponse,
+    NotionPageId,
+    OkResponse,
+    Recipe,
+    RecipeDetails,
+    RecipeListResponse,
+    RecipeRequest,
+    RecipeResponse,
+    ShoppingListList,
+    ShoppingListRequest,
+    UpdateRecipeRequest,
+    UpdateShoppingListRequest,
+)
 from mongo_utils import MongoUtils
 from notion.notion_utils import NotionUtils
 
@@ -28,20 +38,8 @@ GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
 GEMINI_MODEL = "gemini-2.5-flash-lite"
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# Templates directory
-templates = Jinja2Templates(directory="templates")
 
 mongo = MongoUtils()
-
-
-@app.get("/", response_class=HTMLResponse)
-@app.get("/recipes", response_class=HTMLResponse)
-@app.get("/addRecipe", response_class=HTMLResponse)
-@app.get("/shoppingList", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/api/recipe/add_auto", response_model=IdResponse)
