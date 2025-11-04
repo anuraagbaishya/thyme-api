@@ -6,10 +6,7 @@ from typing import List, Optional
 from urllib.parse import ParseResult, urlparse
 
 from bson import ObjectId
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, HTTPException
 from recipe_scrapers import scrape_me
 
 from ai_tasks import ExtractRecipeDetailsTask, GenerateRecipeTask

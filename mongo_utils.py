@@ -29,7 +29,7 @@ class MongoUtils:
         # self.client: MongoClient = MongoClient(
         #     f"mongodb+srv://{self.mongo_user}:{self.mongo_passwd}@{self.mongo_url}"
         # )
-        self.client: MongoClient = MongoClient(f"mongodb+srv://{self.mongo_uri}")
+        self.client: MongoClient = MongoClient(f"{self.mongo_uri}")
         self.db = self.client.clipcart
         self.recipes_collection = self.db.recipes
         self.shopping_list_collection = self.db.shopping_list
