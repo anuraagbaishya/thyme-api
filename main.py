@@ -37,7 +37,10 @@ GEMINI_MODEL = "gemini-2.5-flash-lite"
 
 app = FastAPI()
 
-mongo = MongoUtils()
+try:
+    mongo = MongoUtils()
+except Exception as e:
+    logging.error(e)
 
 
 @app.post("/api/recipe/add_auto", response_model=IdResponse)

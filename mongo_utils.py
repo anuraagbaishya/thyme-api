@@ -15,12 +15,21 @@ from models import (
 
 class MongoUtils:
     def __init__(self):
-        self.mongo_user: str = "clipcart_db_admin"
+        self.mongo_user: str = os.getenv("MONGO_USER", "")
         self.mongo_passwd: str = os.getenv("MONGODB_PASSWD", "")
-        self.mongo_url = "cluster0.xmqjv4z.mongodb.net/?appName=Cluster0"
-        self.client: MongoClient = MongoClient(
-            f"mongodb+srv://{self.mongo_user}:{self.mongo_passwd}@{self.mongo_url}"
-        )
+        self.mongo_url: str = os.getenv("MONGO_URL", "")
+        self.mongo_uri: str = os.getenv("MONGO_URI", "")
+        if not self.mongo_user:
+            raise ValueError("mongo user is not set")
+        if not self.mongo_url:
+            raise ValueError("mongo url is not set")
+        if not self.mongo_passwd:
+            raise ValueError("mongo password is not set")
+
+        # self.client: MongoClient = MongoClient(
+        #     f"mongodb+srv://{self.mongo_user}:{self.mongo_passwd}@{self.mongo_url}"
+        # )
+        self.client: MongoClient = MongoClient(f"mongodb+srv://{self.mongo_uri}")
         self.db = self.client.clipcart
         self.recipes_collection = self.db.recipes
         self.shopping_list_collection = self.db.shopping_list
