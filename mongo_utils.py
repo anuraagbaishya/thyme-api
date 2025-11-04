@@ -18,13 +18,13 @@ class MongoUtils:
         self.mongo_user: str = os.getenv("MONGO_USER", "")
         self.mongo_passwd: str = os.getenv("MONGODB_PASSWD", "")
         self.mongo_url: str = os.getenv("MONGO_URL", "")
-        self.mongo_uri: str = os.getenv("MONGO_URI", "")
-        if not self.mongo_user:
-            raise ValueError("mongo user is not set")
-        if not self.mongo_url:
-            raise ValueError("mongo url is not set")
-        if not self.mongo_passwd:
-            raise ValueError("mongo password is not set")
+        self.mongo_uri: str = os.getenv("MONGODB_URI", "")
+        # if not self.mongo_user:
+        #     raise ValueError("mongo user is not set")
+        # if not self.mongo_url:
+        #     raise ValueError("mongo url is not set")
+        # if not self.mongo_passwd:
+        #     raise ValueError("mongo password is not set")
 
         # self.client: MongoClient = MongoClient(
         #     f"mongodb+srv://{self.mongo_user}:{self.mongo_passwd}@{self.mongo_url}"
