@@ -8,7 +8,7 @@ from models import (
     Recipe,
     ShoppingList,
     ShoppingListItem,
-    ShoppingListList,
+    ShoppingListResponse,
     ShoppingListRequest,
 )
 
@@ -18,7 +18,7 @@ class MongoUtils:
         self.mongo_user: str = os.getenv("MONGO_USER", "")
         self.mongo_passwd: str = os.getenv("MONGODB_PASSWD", "")
         self.mongo_url: str = os.getenv("MONGO_URL", "")
-        # self.mongo_uri: str = os.getenv("MONGODB_URI", "")
+
         if not self.mongo_user:
             raise ValueError("mongo user is not set")
         if not self.mongo_url:
@@ -29,7 +29,7 @@ class MongoUtils:
         self.client: MongoClient = MongoClient(
             f"mongodb+srv://{self.mongo_user}:{self.mongo_passwd}@{self.mongo_url}"
         )
-        # self.client: MongoClient = MongoClient(f"{self.mongo_uri}")
+
         self.db = self.client.clipcart
         self.recipes_collection = self.db.recipes
         self.shopping_list_collection = self.db.shopping_list
@@ -115,7 +115,7 @@ class MongoUtils:
             {"_id": ObjectId(id)}, {"$set": {"items": [i.model_dump() for i in items]}}
         )
 
-    def get_all_shopping_lists(self) -> ShoppingListList:
+    def get_all_shopping_lists(self) -> ShoppingListResponse:
         shopping_lists_from_db: List[dict] = list(
             self.shopping_list_collection.find({})
         )
@@ -132,4 +132,4 @@ class MongoUtils:
             shopping_list = ShoppingList(items=items, name=name, _id=str(id))
             shopping_lists.append(shopping_list)
 
-        return ShoppingListList(lists=shopping_lists)
+        return ShoppingListResponse(lists=shopping_lists)

@@ -20,10 +20,6 @@ class ShoppingList(BaseModel):
     items: List[ShoppingListItem]
 
 
-class ShoppingListList(BaseModel):
-    lists: List[ShoppingList]
-
-
 class Ingredients(BaseModel):
     ingredients: Optional[List[str]]
     measured_ingredients: Optional[List[str]]

@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 
-from .data_models import Recipe, ShoppingListItem
+from .data_models import Recipe, ShoppingList
 
 
 class IdResponse(BaseModel):
@@ -19,3 +19,7 @@ class RecipeListResponse(BaseModel):
 
 class OkResponse(BaseModel):
     ok: str = "ok"
+
+
+class ShoppingListResponse(BaseModel):
+    lists: List[ShoppingList]

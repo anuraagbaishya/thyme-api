@@ -20,7 +20,7 @@ from models import (
     RecipeListResponse,
     RecipeRequest,
     RecipeResponse,
-    ShoppingListList,
+    ShoppingListResponse,
     ShoppingListRequest,
     UpdateRecipeRequest,
     UpdateShoppingListRequest,
@@ -91,8 +91,8 @@ async def add_recipe(data: AddRecipeRequest) -> IdResponse:
     return IdResponse(id=str(recipe_id))  # type: ignore
 
 
-@app.get("/api/shopping_lists", response_model=ShoppingListList)
-def get_all_shopping_lists() -> ShoppingListList:
+@app.get("/api/shopping_lists", response_model=ShoppingListResponse)
+def get_all_shopping_lists() -> ShoppingListResponse:
     return mongo.get_all_shopping_lists()
 
 
@@ -126,9 +126,9 @@ def update_shopping_list(data: UpdateShoppingListRequest) -> OkResponse:
     return OkResponse()
 
 
-@app.delete("/api/shopping_list/delete", response_model=OkResponse)
-def delete_shopping_list(id: str) -> OkResponse:
-    mongo.delete_shopping_list(id)
+@app.delete("/api/shopping_list/{shopping_list_id}", response_model=OkResponse)
+def delete_shopping_list(shopping_list_id: str) -> OkResponse:
+    mongo.delete_shopping_list(shopping_list_id)
 
     return OkResponse()
 
